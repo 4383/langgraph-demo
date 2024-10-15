@@ -7,74 +7,47 @@ from modules.date import DateTimeRequest, DateRequest
 
 
 @tool
-def take_notes(content):
+def document_obsidian_topic(topic):
     """
-    take note for user
+    document a given topic into obsidian
     """
-    print("prise de note")
+    print(f"document: {content}")
+    return topic
+
+
+@tool
+def amend_daily_file(topic):
+    """
+    amend content into the daily file
+    """
+    print(f"daily note: {content}")
+    return topic
+
+
+@tool
+def save_local_files():
+    """
+    save local files
+    """
+    print("saving")
     return content
 
 
-def get_date_part(part: str):
-    now = datetime.now()
-
-    if part == "day_number":
-        return now.strftime("%d")  # Numéro du jour
-    elif part == "day_name":
-        return now.strftime("%A")  # Nom du jour (Lundi, Mardi, etc.)
-    elif part == "month_number":
-        return now.strftime("%m")  # Numéro du mois
-    elif part == "month_name":
-        return now.strftime("%B")  # Nom du mois (Janvier, Février, etc.)
-    elif part == "year":
-        return now.strftime("%Y")  # Année
-    else:
-        return "Invalid part requested"
-
-# Créer un outil pour LangChain
-def date_tool_func(request: DateRequest):
+@tool
+def retrieve_current_date():
+    """
+    retrieve the current date
+    """
     print("retrieve date")
-    return get_date_part(request.part)
+    return datetime.now().strftime("%Y-%m-%d")
 
-date_tool = Tool(
-    name="Date Tool",
-    description="""
-    The Date Tool allows users to retrieve specific components of the current date. 
-    It can answer queries about isolated parts of the date, such as the day number, day name, month number, month name, or year. The tool is designed to respond flexibly to user requests by providing exactly the requested date component.
-    
-    This tool is especially useful for cases where a user may ask questions like:
-    - "What day is it today?"
-    - "What is the current month's number?"
-    - "Which year are we in?"
-    - "What is the current month's name?"
-    
-    The tool processes the user's request, validates it, and returns the requested date component based on the current day.
-    
-    Input Parameters:
-    - `part` (str): This parameter defines the specific part of the current date the user wants to retrieve. It must be one of the following:
-      - `"day_number"`: Returns the current day of the month as a number (e.g., "15").
-      - `"day_name"`: Returns the full name of the current day (e.g., "Monday").
-      - `"month_number"`: Returns the current month as a number (e.g., "10" for October).
-      - `"month_name"`: Returns the full name of the current month (e.g., "October").
-      - `"year"`: Returns the current year (e.g., "2024").
-    
-    Output:
-    - The tool will return the specific component of the current date as requested by the user.
-      
-    Example Usage:
-    - To get the current day of the week:
-      result = date_tool_func(DateRequest(part="day_name"))  # Returns "Monday"
-      
-    - To get the current month number:
-      result = date_tool_func(DateRequest(part="month_number"))  # Returns "10"
-      
-    Error Handling:
-    - If the input parameter `part` does not match one of the accepted values, 
-      a ValueError will be raised with a message indicating the allowed options.
-    """,
-    func=date_tool_func
-)
-
+@tool
+def retrieve_current_time():
+    """
+    retrieve the current time
+    """
+    print("retrieve time")
+    return datetime.now().strftime("%H:%M:%S")
 
 #def retrieve_datetime(part="both"):
 #    print("ici")
